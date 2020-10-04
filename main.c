@@ -20,7 +20,7 @@ int main()
     int removeResult;
     int modifyResult;
     int index;
-    int order = 0;
+    int order = 1;
     int activeEmployeeCount = 0; // Contador de empleados activos en la lista, impide entrar a las opciones 2,3,4 si no hay nadie
 
     Employee employeesList[MAX_EMPLOYEES];
@@ -113,8 +113,8 @@ int main()
             printf("Error, opción inválida\n\n");
             break;
         }
-    showMenu();
-    option = askForOption();
+        showMenu();
+        option = askForOption();
     }
     return 0;
 }

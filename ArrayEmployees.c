@@ -164,18 +164,21 @@ int sortEmployees(Employee* list, int len, int order)
                 }
                 else
                 {
-                    if(order == 1)
+                    if(list[j].isEmpty !=1)
                     {
-                        if(list[i].lastName > list[j].lastName || (list[i].lastName == list[j].lastName && list[i].sector > list[j].sector)) // Ordena por apellido y sector de manera ascendente o descendente.
+                        if(order == 1)
                         {
-                            swapEmployee(list, i, j);
+                            if(strcmp(list[i].lastName,list[j].lastName) > 0 || (strcmp(list[i].lastName,list[j].lastName) == 0 && list[i].sector > list[j].sector)) // Ordena por apellido y sector de manera ascendente o descendente.
+                            {
+                                swapEmployee(list, i, j);
+                            }
                         }
-                    }
-                    else
-                    {
-                        if(list[i].lastName < list[j].lastName || (list[i].lastName == list[j].lastName && list[i].sector > list[j].sector)) // Ordena por apellido y sector de manera ascendente o descendente.
+                        else
                         {
-                            swapEmployee(list, i, j);
+                            if(strcmp(list[i].lastName,list[j].lastName) < 0 || (strcmp(list[i].lastName,list[j].lastName) == 0 && list[i].sector > list[j].sector)) // Ordena por apellido y sector de manera ascendente o descendente.
+                            {
+                                swapEmployee(list, i, j);
+                            }
                         }
                     }
                 }
@@ -203,7 +206,7 @@ void showEmployeesSalaries(Employee* list, int len, int activeEmployeeCount)
     }
     else
     {
-        printf("La lista de empleados o su tamaño son invalidos");
+        printf("La lista de empleados o su tamaño son invalidos\n");
     }
 }
 
@@ -256,16 +259,12 @@ int printEmployees(Employee* list, int len)
 
     if(checkLenAndList(len, list) != 0)
     {
-        printf("i\tid\tNombre\tApellido\tSalario\tSector\n");
+        printf("%-4s%-4s%-50s%-50s%-20s%-8s\n", "i", "id", "Nombre", "Apellido", "Salario", "Sector");
         for(int i = 0; i < len; i++)
         {
-            if(list[i].isEmpty == 1)
+            if(list[i].isEmpty != 1)
             {
-                printf("%d \n", i);
-            }
-            else
-            {
-                printf("%4d\t%4d\t%s\t%s\t%.2f\t%d\n", i, list[i].id, list[i].name, list[i].lastName, list[i].salary, list[i].sector);
+                printf("%-4d%-4d%-50s%-50s%-20.2f%-8d\n", i, list[i].id, list[i].name, list[i].lastName, list[i].salary, list[i].sector);
             }
         }
         result = 0;
@@ -302,10 +301,12 @@ int askForOption()
 {
     int option;
     printf("Ingrese opcion\n");
+    __fpurge(stdin);
     scanf("%d", &option);
     while(option < 1 || option > 5)
     {
         printf("Opcion invalida, reingrese opcion\n");
+        __fpurge(stdin);
         scanf("%d", &option);
     }
     return option;
@@ -345,23 +346,25 @@ void loadName(char* employeeName)
 {
     printf("Ingrese nombre: ");
     __fpurge(stdin);
-    scanf("%s", employeeName);
+    scanf("%50[^\n]", employeeName);
 }
 
 void loadSurname (char* employeeLastName)
 {
     printf("Ingrese apellido: ");
     __fpurge(stdin);
-    scanf("%s", employeeLastName);
+    scanf("%50[^\n]", employeeLastName);
 }
 
 void loadSalary (float* employeeSalary)
 {
     printf("Ingrese salario: ");
+    __fpurge(stdin);
     scanf("%f", employeeSalary);
     while(employeeSalary <= 0)
     {
         printf("Error, reingrese salario: ");
+        __fpurge(stdin);
         scanf("%f", employeeSalary);
     }
 }
@@ -369,5 +372,6 @@ void loadSalary (float* employeeSalary)
 void loadSector(int* employeeSector)
 {
     printf("Ingrese sector: ");
+    __fpurge(stdin);
     scanf("%d", employeeSector);
 }
